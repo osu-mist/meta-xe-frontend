@@ -10,7 +10,6 @@ setup(
     ],
     install_requires = [
         'Flask>=0.11.1',
-        'Flask-SeaSurf>=0.2.2',
         'requests>=2.11',
         'urllib3[secure]>=1.16',
     ],
