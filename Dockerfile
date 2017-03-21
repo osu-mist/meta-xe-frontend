@@ -1,5 +1,5 @@
 FROM python:2.7-alpine
-MAINTAINER Andrew Ekstedt <ekstedta@oregonstate.edu>
+LABEL maintainer "Andrew Ekstedt <ekstedta@oregonstate.edu>"
 
 RUN pip install gunicorn
 
