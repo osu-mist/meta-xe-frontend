@@ -71,23 +71,39 @@
                     <th>Version</th>
                   </tr>
                 <tbody>
-                  {% for app in apps|sort(attribute='id') %}
-                    {% for instance, version in app.attributes.versions|dictsort|reverse|list %}
+                  {% if instance %}
+                    {% for app in apps|sort(attribute='id') %}
                       <tr>
-                        {% if loop.first %}
-                          <td rowspan="{{loop.length}}">
-                            {{ app.attributes.applicationName }}
-                          </td>
-                        {% endif %}
+                        <td>
+                          {{ app.attributes.applicationName }}
+                        </td>
                         <td>
                           {{ instance }}
                         </td>
                         <td>
-                          {{ version }}
+                          {{ app.attributes.versions[instance] }}
                         </td>
                       </tr>
                     {% endfor %}
-                  {% endfor %}
+                  {% else %}
+                    {% for app in apps|sort(attribute='id') %}
+                      {% for instance, version in app.attributes.versions|dictsort|reverse|list %}
+                        <tr>
+                          {% if loop.first %}
+                            <td rowspan="{{loop.length}}">
+                              {{ app.attributes.applicationName }}
+                            </td>
+                          {% endif %}
+                          <td>
+                            {{ instance }}
+                          </td>
+                          <td>
+                            {{ version }}
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    {% endfor %}
+                  {% endif %}
               </table>
             </div>
 
