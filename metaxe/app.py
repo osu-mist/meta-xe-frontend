@@ -52,14 +52,21 @@ def index():
     except (ValueError, KeyError):
         page = 1
 
+
     response = client.search(q, instance=instance, page=page)
+
+    args = {}
+    if q:
+        args['q'] = q
+    if instance:
+        args['instance'] = instance
 
     prev_page = None
     next_page = None
     if response.get('links', {}).get('next'):
-        next_page = flask.url_for('index', q=q, instance=instance, page=page+1)
+        next_page = flask.url_for('index', page=page+1, **args)
     if response.get('links', {}).get('prev'):
-        prev_page = flask.url_for('index', q=q, instance=instance, page=page-1)
+        prev_page = flask.url_for('index', page=page-1, **args)
 
     return flask.render_template('index.html',
         apps=response['data'],
