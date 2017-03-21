@@ -1,0 +1,12 @@
+# virtualenv dirs
+/bin/
+/include/
+/lib/
+/local/
+/share/
+# configuration
+/config.py
+# package info
+*.egg-info
+# pip junk
+/pip-selfcheck.json
