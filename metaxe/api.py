@@ -19,7 +19,7 @@ class Client(object):
         self.api_endpoint = app.config['API_ENDPOINT']
         self.token_endpoint = app.config['TOKEN_ENDPOINT']
 
-    def search(self, q="", version="", instance=""):
+    def search(self, q="", version="", instance="", page=1):
         """Get the value corresponding to a given SSN.
 
         Exceptions:
@@ -34,6 +34,8 @@ class Client(object):
             'q': q,
             'version': version,
             'instance': instance,
+            'page[number]': page,
+            'page[size]': 20,
         }
         headers = {'Authorization': "Bearer "+access_token}
         response = requests.get(self.api_endpoint, params=payload, headers=headers)

@@ -42,6 +42,35 @@
     <section class="content">
       <div class="container">
         <div class="row">
+          <form class="form">
+            <div class="col-md-4 col-md-offset-5 col-sm-5 col-sm-offset-3">
+              <div class="form-group">
+                <label for="filter-name">Name</label><br>
+                <input id="filter-name" name="q" type="text" class="form-control" value="{{request.args.q}}">
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label for="filter-instance">Instance</label><br>
+                <select id="filter-instance" name="instance" class="form-control">
+                  <option value="" >Any</option>
+                  {% for instance in config.INSTANCES %}
+                    <option value="{{instance}}" {% if request.args.instance == instance %}selected{% endif %}>
+                      {{- instance -}}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-1">
+              <div class="form-group">
+                <label><br>
+                <button class="btn btn-primary">Filter</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="row">
           <div class="col-md-12">
             <div class="table-responsive">
               <table class="table">
@@ -52,7 +81,7 @@
                     <th>Version</th>
                   </tr>
                 <tbody>
-                  {% for app in apps.data|sort(attribute='id') %}
+                  {% for app in apps|sort(attribute='id') %}
                     {% for instance, version in app.attributes.versions|dictsort|reverse|list %}
                       <tr>
                         {% if loop.first %}
@@ -71,10 +100,26 @@
                   {% endfor %}
               </table>
             </div>
+
+            <nav aria-label="Page navigation">
+              <ul class="pager">
+                {% if prev_page %}
+                  <li class="previous"><a href="{{ prev_page}}"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                {% else %}
+                  <li class="previous disabled"><a><span aria-hidden="true">&larr;</span> Previous</a></li>
+                {% endif %}
+                {% if next_page %}
+                  <li class="next"><a href="{{ next_page }}">Next <span aria-hidden="true">&rarr;</span></a></li>
+                {% else %}
+                  <li class="next disabled"><a>Next <span aria-hidden="true">&rarr;</span></a></li>
+                {% endif %}
+              </ul>
+            </nav>
           </div>
         </div>
       </div>
     </section>
+
 
     <footer>
       <div class="container-fluid">

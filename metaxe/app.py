@@ -17,6 +17,7 @@ app = flask.Flask('metaxe')
 app.config['SECRET_KEY'] = None
 app.config['API_ENDPOINT'] = None
 app.config['TOKEN_ENDPOINT'] = None
+app.config['INSTANCES'] = ['prod', 'devl', 'dev2']
 
 # make cookies more secure
 # cookies with the secure flag are only sent over HTTPS
@@ -31,8 +32,7 @@ if 'METAXE_CONFIG' in os.environ:
     app.config.from_envvar('METAXE_CONFIG')
 
 csrf = SeaSurf(app)
-#request = flask.request
-#session = flask.session
+request = flask.request
 
 @app.before_request
 def check_config_vars():
@@ -42,9 +42,30 @@ def check_config_vars():
 @app.route('/')
 def index():
     client = api.Client(app)
-    response = client.search()
-    apps = response
-    return flask.render_template('index.html', apps=apps)
+
+    q = request.args.get('q', '')
+    instance = request.args.get('instance', '')
+    if instance not in app.config['INSTANCES']:
+        instance = ''
+    try:
+        page = int(request.args['page'])
+    except (ValueError, KeyError):
+        page = 1
+
+    response = client.search(q, instance=instance, page=page)
+
+    prev_page = None
+    next_page = None
+    if response.get('links', {}).get('next'):
+        next_page = flask.url_for('index', q=q, instance=instance, page=page+1)
+    if response.get('links', {}).get('prev'):
+        prev_page = flask.url_for('index', q=q, instance=instance, page=page-1)
+
+    return flask.render_template('index.html',
+        apps=response['data'],
+        next_page=next_page,
+        prev_page=prev_page,
+    )
 
 
 def append_query(url, query):
