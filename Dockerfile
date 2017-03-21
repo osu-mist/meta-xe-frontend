@@ -10,11 +10,12 @@ RUN apk update \
     && apk add openssl libffi \
     && apk del build-base openssl-dev libffi-dev
 
-COPY ["setup.py", "metaxe.py", "/src/"]
-COPY templates /src/templates/
+COPY ["setup.py", "/src/"]
+COPY ["metaxe/__init__.py", "metaxe/app.py", "metaxe/api.py", "/src/metaxe/"]
+COPY ["metaxe/templates", "/src/metaxe/templates/"]
 RUN pip install -e /src
 
 ENV METAXE_CONFIG /src/config.py
 ENV TZ America/Los_Angeles
 USER nobody
-CMD ["gunicorn", "--bind", ":8000", "consent:app"]
+CMD ["gunicorn", "--bind", ":8000", "metaxe.app:app"]
