@@ -57,3 +57,7 @@ def index():
         prev_page=prev_page,
         instance=instance,
     )
+
+@app.route('/healthcheck')
+def healthcheck():
+    return 'ok'
