@@ -177,3 +177,7 @@ footer a:hover, footer a:active, footer a:focus {
     border-color: #8f3300; /* hsl(21.24, 100%, 28%); */
     background-color: #a33a00; /* hsl(21.24, 100%, 32%); */
 }
+
+.table .odd {
+    background-color: #f9f9f9;
+}

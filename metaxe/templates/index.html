@@ -76,31 +76,33 @@
                 <tbody>
                   {% if instance %}
                     {% for app in apps|sort(attribute='id') %}
+                      {% set parity = loop.cycle("even", "odd") %}
                       <tr>
-                        <td>
+                        <td class="{{parity}}">
                           {{ app.attributes.applicationName }}
                         </td>
-                        <td>
+                        <td class="{{parity}}">
                           {{ instance }}
                         </td>
-                        <td>
+                        <td class="{{parity}}">
                           {{ app.attributes.versions[instance] }}
                         </td>
                       </tr>
                     {% endfor %}
                   {% else %}
                     {% for app in apps|sort(attribute='id') %}
+                      {% set parity = loop.cycle("even", "odd") %}
                       {% for instance, version in app.attributes.versions|dictsort|reverse|list %}
                         <tr>
                           {% if loop.first %}
-                            <td rowspan="{{loop.length}}">
+                            <td rowspan="{{loop.length}}" class="{{parity}}">
                               {{ app.attributes.applicationName }}
                             </td>
                           {% endif %}
-                          <td>
+                          <td class="{{parity}}">
                             {{ instance }}
                           </td>
-                          <td>
+                          <td class="{{parity}}">
                             {{ version }}
                           </td>
                         </tr>
