@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>XE Apps - Oregon State University</title>
+    <title>XE Self-Service Apps - Oregon State University</title>
     <link rel="Shortcut Icon" href="https://developer.oregonstate.edu/sites/all/themes/doug-fir/favicon.ico" />
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -26,7 +26,7 @@
   <body>
     <header>
       <a href="http://oregonstate.edu"><img id="logo" src="http://oregonstate.edu/images/logo.jpg?v=1" alt="Oregon State University" width="215" height="78"/></a>
-      <a id="site-title"><h1>XE Apps</h1></a>
+      <a id="site-title"><h1>XE Self-Service Apps</h1></a>
     </header>
 
     <section class="content">
@@ -35,7 +35,7 @@
           <form class="form">
             <div class="col-md-4 col-md-offset-4 col-sm-6">
               <div class="form-group">
-                <label for="filter-name">Name</label><br>
+                <label for="filter-name">Search by name</label><br>
                 <input id="filter-name" name="q" type="text" class="form-control" value="{{request.args.q}}">
               </div>
             </div>
@@ -55,7 +55,7 @@
             <div class="col-sm-3 col-md-2 form-inline">
               <label class="hidden-xs">&nbsp;</label><br class="hidden-xs">
               <div class="form-group">
-                <button class="btn btn-primary">Filter</button>
+                <button class="btn btn-primary">Search</button>
               </div>
               <div class="form-group">
                 <a href="{{ url_for('index') }}" class="btn btn-link">Reset</a>
